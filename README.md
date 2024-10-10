@@ -2,7 +2,7 @@
 
 ---
 **Description**  
-The Advanced Color Palette Generator is a sophisticated web application that allows users to generate and compare color palettes based on hex values, random inputs, or mood-based descriptions. Users can generate multiple palettes, view individual color details, download the palettes, and compare them in a side-by-side view. The design is sleek and professional, featuring hover effects, color previews, and advanced download capabilities for both color palettes and gradients.
+The ChromaVerse is a sophisticated web application that allows users to generate and compare color palettes based on hex values, random inputs, or mood-based descriptions. Users can generate multiple palettes, view individual color details, download the palettes, and compare them in a side-by-side view. The design is sleek and professional, featuring hover effects, color previews, and advanced download capabilities for both color palettes and gradients.
 
 ---
 
