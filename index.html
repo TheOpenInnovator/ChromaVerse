@@ -3,35 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Color Palette Generator</title>
+    <title>ChromaVerse: Advanced Color Palette Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
 <body>
     <div class="container">
         <header>
-            <h1>Color Palette Generator</h1>
-            <p>Enter hex values, text descriptions, or moods to generate a color palette</p>
+            <h1>ChromaVerse</h1>
+            <p>Advanced Color Palette Generator</p>
         </header>
-        
-        <div class="input-section">
-            <input type="text" id="colorInput" class="color-input" placeholder="Enter hex codes or descriptions">
-            <button id="generateBtn" class="generate-btn">Generate</button>
+
+        <div class="input-section glassmorphism">
+            <input type="text" id="colorInput" class="color-input" placeholder="Enter colors, hex codes, or describe a mood">
+            <button id="generateBtn" class="generate-btn">
+                <i class="fas fa-palette"></i> Generate
+            </button>
         </div>
 
-        <div id="paletteContainer" class="palette-container"></div>
-
-        <div id="compareSection" class="compare-section">
-            <h2>Compare Palettes</h2>
-            <div id="compareList" class="compare-list"></div>
-            <button id="clearAllBtn" class="clear-btn">Clear All</button>
+        <div class="tools-section">
+            <div class="color-picker-wrapper">
+                <input type="color" id="colorPicker">
+                <span id="selectedColor" class="selected-color">#FFFFFF</span>
+            </div>
+            <button id="modeToggle" class="mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
 
-        <div id="colorPickerSection" class="color-picker-section">
-            <input type="color" id="colorPicker" />
-            <span id="colorHexValue">#FFFFFF</span>
-        </div>
+        <div id="palettesContainer" class="palettes-container"></div>
     </div>
 
+    <div id="snapshotModal" class="modal">
+        <div class="modal-content glassmorphism">
+            <span class="close-modal">&times;</span>
+            <h2>Customize Snapshot</h2>
+            <input type="text" id="usernameInput" placeholder="Enter your username (optional)">
+            <div class="snapshot-container">
+                <canvas id="snapshotCanvas" class="snapshot-canvas"></canvas>
+            </div>
+            <div class="snapshot-actions">
+                <button id="downloadBtn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <div class="social-share">
+                    <button id="shareFacebook" class="fa-brands fa-facebook"></button>
+                    <button id="shareTwitter" class="fa-brands fa-twitter"></button>
+                    <button id="shareInstagram" class="fa-brands fa-instagram"></button>
+                    <button id="sharePinterest" class="fa-brands fa-pinterest"></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
