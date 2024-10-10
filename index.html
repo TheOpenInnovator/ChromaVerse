@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Color Palette Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Color Palette Generator</h1>
+            <p>Enter hex values, text descriptions, or moods to generate a color palette</p>
+        </header>
+        
+        <div class="input-section">
+            <input type="text" id="colorInput" class="color-input" placeholder="Enter hex codes or descriptions">
+            <button id="generateBtn" class="generate-btn">Generate</button>
+        </div>
+
+        <div id="paletteContainer" class="palette-container"></div>
+
+        <div id="compareSection" class="compare-section">
+            <h2>Compare Palettes</h2>
+            <div id="compareList" class="compare-list"></div>
+            <button id="clearAllBtn" class="clear-btn">Clear All</button>
+        </div>
+
+        <div id="colorPickerSection" class="color-picker-section">
+            <input type="color" id="colorPicker" />
+            <span id="colorHexValue">#FFFFFF</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
