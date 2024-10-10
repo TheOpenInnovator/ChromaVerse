@@ -215,6 +215,10 @@ const colorInput = document.getElementById('colorInput');
     colorPicker.addEventListener('input', (e) => {
         selectedColor.textContent = e.target.value;
         selectedColor.style.backgroundColor = e.target.value;
+
+        const rValue = parseInt(e.target.value.slice(1, 3), 16);
+
+        selectedColor.style.color = rValue <= 128 ? 'white' : 'black';
     });
 
     modeToggle.addEventListener('click', () => {
