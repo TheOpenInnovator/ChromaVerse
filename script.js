@@ -13,6 +13,7 @@ const colorInput = document.getElementById('colorInput');
         const shareTwitter = document.getElementById('shareTwitter');
         const shareInstagram = document.getElementById('shareInstagram');
         const sharePinterest = document.getElementById('sharePinterest');
+        const deleteBtn = document.getElementById('deleteBtn');
 
         let palettes = [];
 
@@ -92,11 +93,16 @@ const colorInput = document.getElementById('colorInput');
                 saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
                 saveBtn.addEventListener('click', () => savePalette(palette));
 
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
+                deleteBtn.addEventListener('click', () => deletePalette(palette));
+
                 const shareBtn = document.createElement('button');
                 shareBtn.innerHTML = '<i class="fas fa-share-alt"></i> Share';
                 shareBtn.addEventListener('click', () => openSnapshotModal(palette));
 
                 actionsDiv.appendChild(saveBtn);
+                actionsDiv.appendChild(deleteBtn);
                 actionsDiv.appendChild(shareBtn);
 
                 paletteCard.appendChild(colorsDiv);
@@ -122,6 +128,14 @@ const colorInput = document.getElementById('colorInput');
         savedPalettes.push(palette);
         localStorage.setItem('savedPalettes', JSON.stringify(savedPalettes));
         alert('Palette saved successfully!');
+    }
+
+    // Delete palette
+    function deletePalette(selectedPalette) {
+        const savedPalettes = JSON.parse(localStorage.getItem('savedPalettes')) || [];
+        const updatedPalettes = savedPalettes.filter((palette)=>JSON.stringify(palette.colors)!==JSON.stringify(selectedPalette.colors))
+        localStorage.setItem('savedPalettes', JSON.stringify(updatedPalettes));
+        alert('Palette deleted successfully!');
     }
 
     // Open snapshot modal
