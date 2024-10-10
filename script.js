@@ -1,4 +1,4 @@
- const colorInput = document.getElementById('colorInput');
+const colorInput = document.getElementById('colorInput');
         const generateBtn = document.getElementById('generateBtn');
         const colorPicker = document.getElementById('colorPicker');
         const selectedColor = document.getElementById('selectedColor');
