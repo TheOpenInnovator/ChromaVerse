@@ -230,6 +230,33 @@ h1 {
     cursor: pointer;
 }
 
+.inputWithButtons{
+    margin-top: .5vw;
+    display: flex;
+    gap: .5vw;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+#usernameInput, .btns{
+    padding: .5vw;
+    border: .4px solid var(--text);
+    border-radius: .4vw;
+    cursor: pointer;
+}
+
+.innerBtns{
+    display: flex;
+    gap: .5vw;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btns{
+    border-radius: 5px;
+}
+
 .snapshot-container {
     margin-top: 1rem;
     text-align: center;
@@ -270,8 +297,14 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    .input-section {
+    .input-section, .inputWithButtons {
         flex-direction: column;
+    }
+
+    .innerBtns{
+        margin-top: 5px;
+        display: flex;
+        gap: 5px;
     }
 
     .color-input {

@@ -41,7 +41,14 @@
         <div class="modal-content glassmorphism">
             <span class="close-modal">&times;</span>
             <h2>Customize Snapshot</h2>
-            <input type="text" id="usernameInput" placeholder="Enter your username (optional)">
+            <div class="inputWithButtons">
+                <input type="text" id="usernameInput" placeholder="Enter your username (optional)" autocomplete="off">
+                <div class="innerBtns">
+                    <button id="enterBtn" class="btns">Enter</button>
+            <button id="editBtn" class="btns">Edit</button>
+            <button id="deleteBtn" class="btns">Delete</button>
+                </div>
+            </div>
             <div class="snapshot-container">
                 <canvas id="snapshotCanvas" class="snapshot-canvas"></canvas>
             </div>
