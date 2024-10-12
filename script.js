@@ -115,24 +115,61 @@ function renderPalettes() {
   });
 }
 
+function showToast(message, type = 'info') {
+  const toasterContainer = document.getElementById('toaster-container');
+  const toaster = document.createElement('div');
+  toaster.className = 'toaster glassmorphism';
+
+  const icon = document.createElement('i');
+  icon.className = 'toaster-icon';
+  
+  switch (type) {
+      case 'success':
+          icon.className += ' fas fa-check-circle';
+          break;
+      case 'error':
+          icon.className += ' fas fa-exclamation-circle';
+          break;
+      default:
+          icon.className += ' fas fa-info-circle';
+  }
+
+  const messageSpan = document.createElement('span');
+  messageSpan.textContent = message;
+
+  const closeBtn = document.createElement('span');
+  closeBtn.innerHTML = '&times;';
+  closeBtn.className = 'toaster-close';
+  closeBtn.onclick = () => toaster.remove();
+
+  toaster.appendChild(icon);
+  toaster.appendChild(messageSpan);
+  toaster.appendChild(closeBtn);
+  toasterContainer.appendChild(toaster);
+
+  setTimeout(() => {
+      toaster.remove();
+  }, 3000);
+}
+
 // Copy color to clipboard
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
-    () => {
-      alert(`Copied ${text} to clipboard!`);
-    },
-    (err) => {
-      console.error("Could not copy text: ", err);
-    }
+      () => {
+          showToast(`Copied ${text} to clipboard!`, 'success');
+      },
+      (err) => {
+          console.error("Could not copy text: ", err);
+          showToast("Failed to copy to clipboard", 'error');
+      }
   );
 }
 
-// Save palette
 function savePalette(palette) {
   const savedPalettes = JSON.parse(localStorage.getItem("savedPalettes")) || [];
   savedPalettes.push(palette);
   localStorage.setItem("savedPalettes", JSON.stringify(savedPalettes));
-  alert("Palette saved successfully!");
+  showToast("Palette saved successfully!", 'success');
 }
 
 // Open snapshot modal
@@ -262,32 +299,23 @@ function shareOnSocialMedia(platform) {
   let shareUrl;
 
   switch (platform) {
-    case "facebook":
-      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        dataUrl
-      )}`;
-      break;
-    case "twitter":
-      shareUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20ChromaVerse%20palette!&url=${encodeURIComponent(
-        dataUrl
-      )}`;
-      break;
-    case "instagram":
-      alert(
-        "To share on Instagram, please download the image and upload it manually to your Instagram account."
-      );
-      return;
-    case "pinterest":
-      shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
-        window.location.href
-      )}&media=${encodeURIComponent(
-        dataUrl
-      )}&description=My%20ChromaVerse%20Palette`;
-      break;
+      case "facebook":
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(dataUrl)}`;
+          break;
+      case "twitter":
+          shareUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20ChromaVerse%20palette!&url=${encodeURIComponent(dataUrl)}`;
+          break;
+      case "instagram":
+          showToast("To share on Instagram, please download the image and upload it manually to your Instagram account.", 'info');
+          return;
+      case "pinterest":
+          shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&media=${encodeURIComponent(dataUrl)}&description=My%20ChromaVerse%20Palette`;
+          break;
   }
 
   if (shareUrl) {
-    window.open(shareUrl, "_blank");
+      window.open(shareUrl, "_blank");
+      showToast(`Sharing on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`, 'success');
   }
 }
 
