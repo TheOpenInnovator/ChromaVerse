@@ -352,3 +352,58 @@ h1 {
         margin-bottom: 1rem;
     }
 }
+
+.toaster-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toaster {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 var(--shadow);
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+    max-width: 300px;
+}
+
+.toaster-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.toaster-close {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
