@@ -5,6 +5,7 @@ const selectedColor = document.getElementById("selectedColor");
 const modeToggle = document.getElementById("modeToggle");
 const palettesContainer = document.getElementById("palettesContainer");
 const snapshotModal = document.getElementById("snapshotModal");
+const shareSnapshotModal = document.getElementById("shareSnapshotModal");
 const closeModal = document.getElementsByClassName("close-modal")[0];
 const usernameInput = document.getElementById("usernameInput");
 const snapshotCanvas = document.getElementById("snapshotCanvas");
@@ -42,9 +43,9 @@ function generateRandomColors(count) {
   for (let i = 0; i < count; i++) {
     colors.push(
       "#" +
-        Math.floor(Math.random() * 16777215)
-          .toString(16)
-          .padStart(6, "0")
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
     );
   }
   return colors;
@@ -137,10 +138,7 @@ function savePalette(palette) {
 
 // Open snapshot modal
 function openSnapshotModal(palette) {
-  snapshotModal.style.display = "block";
-
-
-
+  SnapshotModal.style.display = "block";
   // Add event listener for the username input field
   usernameInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
@@ -150,7 +148,6 @@ function openSnapshotModal(palette) {
       usernameInput.blur(); // Remove focus from the input field
     }
   });
-
   // Enter Button Event Listner 
   let enterBtn = document.getElementById("enterBtn");
   enterBtn.addEventListener("click", () => {
@@ -173,7 +170,7 @@ function openSnapshotModal(palette) {
     usernameInput.value = currentUsername;
     usernameInput.focus();
     usernameInput.select();
-    
+
     // Update the snapshot when the user finishes editing
     usernameInput.addEventListener("blur", () => {
       const newUsername = usernameInput.value.trim();
@@ -181,15 +178,12 @@ function openSnapshotModal(palette) {
         renderSnapshotCanvas(palette, newUsername);
       }
     });
-
-
   });
+  renderSnapshotCanvas(palette);
+}
 
- 
-
-
-
-
+function openSnapshotModal(palette) {
+  shareSnapshotModal.style.display = "flex";
   renderSnapshotCanvas(palette);
 }
 
@@ -213,11 +207,11 @@ function renderSnapshotCanvas(palette, username) {
 
   // Username
   let userName;
- if(username){
+  if (username) {
     userName = username;
- }else{
+  } else {
     userName = "Anonymous";
- }
+  }
   ctx.font = "16px Arial";
   ctx.fillText(`Created by: ${userName}`, width / 2, 70);
 
@@ -311,7 +305,7 @@ modeToggle.addEventListener("click", () => {
 });
 
 closeModal.addEventListener("click", () => {
-  snapshotModal.style.display = "none";
+  shareSnapshotModal.style.display = "none";
 });
 
 downloadBtn.addEventListener("click", downloadSnapshot);
@@ -414,3 +408,4 @@ function init() {
 }
 
 init();
+

@@ -33,39 +33,35 @@
                 <i class="fas fa-moon"></i>
             </button>
         </div>
-
         <div id="palettesContainer" class="palettes-container"></div>
     </div>
 
-    <div id="snapshotModal" class="modal">
+    <div id="shareSnapshotModal" class="modal">
         <div class="modal-content glassmorphism">
             <span class="close-modal">&times;</span>
-            <h2>Customize Snapshot</h2>
-            <div class="inputWithButtons">
-                <input type="text" id="usernameInput" placeholder="Enter your username (optional)" autocomplete="off">
-                <div class="innerBtns">
-                    <button id="enterBtn" class="btns">Enter</button>
-            <button id="editBtn" class="btns">Edit</button>
-            <button id="deleteBtn" class="btns">Delete</button>
-                </div>
-            </div>
+            <h2>Share Palette</h2>
             <div class="snapshot-container">
                 <canvas id="snapshotCanvas" class="snapshot-canvas"></canvas>
             </div>
             <div class="snapshot-actions">
-                <button id="downloadBtn">
-                    <i class="fas fa-download"></i> Download
-                </button>
-                <div class="social-share">
-                    <button id="shareFacebook" class="fa-brands fa-facebook"></button>
-                    <button id="shareTwitter" class="fa-brands fa-twitter"></button>
-                    <button id="shareInstagram" class="fa-brands fa-instagram"></button>
-                    <button id="sharePinterest" class="fa-brands fa-pinterest"></button>
+                <div class="snapshot-general-actions">
+                    <button id="downloadBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <div class="social-share">
+                        <button id="shareFacebook" class="fa-brands fa-facebook"></button>
+                        <button id="shareTwitter" class="fa-brands fa-twitter"></button>
+                        <button id="shareInstagram" class="fa-brands fa-instagram"></button>
+                        <button id="sharePinterest" class="fa-brands fa-pinterest"></button>
+                    </div>
+                </div>
+                <div class="snapshot-copyPalette-action">
+                    <button id="copyToClipboard"><i class="fas fa-link"></i> Copy Codes</button>
+                    <div class="palette-codes">Display color codes of current palette</div>
                 </div>
             </div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
