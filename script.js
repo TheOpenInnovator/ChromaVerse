@@ -5,6 +5,7 @@ const selectedColor = document.getElementById("selectedColor");
 const modeToggle = document.getElementById("modeToggle");
 const palettesContainer = document.getElementById("palettesContainer");
 const snapshotModal = document.getElementById("snapshotModal");
+const shareSnapshotModal = document.getElementById("shareSnapshotModal");
 const closeModal = document.getElementsByClassName("close-modal")[0];
 const usernameInput = document.getElementById("usernameInput");
 const snapshotCanvas = document.getElementById("snapshotCanvas");
@@ -43,9 +44,9 @@ function generateRandomColors(count) {
   for (let i = 0; i < count; i++) {
     colors.push(
       "#" +
-        Math.floor(Math.random() * 16777215)
-          .toString(16)
-          .padStart(6, "0")
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
     );
   }
   return colors;
@@ -121,24 +122,61 @@ function renderPalettes() {
   });
 }
 
+function showToast(message, type = 'info') {
+  const toasterContainer = document.getElementById('toaster-container');
+  const toaster = document.createElement('div');
+  toaster.className = 'toaster glassmorphism';
+
+  const icon = document.createElement('i');
+  icon.className = 'toaster-icon';
+  
+  switch (type) {
+      case 'success':
+          icon.className += ' fas fa-check-circle';
+          break;
+      case 'error':
+          icon.className += ' fas fa-exclamation-circle';
+          break;
+      default:
+          icon.className += ' fas fa-info-circle';
+  }
+
+  const messageSpan = document.createElement('span');
+  messageSpan.textContent = message;
+
+  const closeBtn = document.createElement('span');
+  closeBtn.innerHTML = '&times;';
+  closeBtn.className = 'toaster-close';
+  closeBtn.onclick = () => toaster.remove();
+
+  toaster.appendChild(icon);
+  toaster.appendChild(messageSpan);
+  toaster.appendChild(closeBtn);
+  toasterContainer.appendChild(toaster);
+
+  setTimeout(() => {
+      toaster.remove();
+  }, 3000);
+}
+
 // Copy color to clipboard
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
-    () => {
-      alert(`Copied ${text} to clipboard!`);
-    },
-    (err) => {
-      console.error("Could not copy text: ", err);
-    }
+      () => {
+          showToast(`Copied ${text} to clipboard!`, 'success');
+      },
+      (err) => {
+          console.error("Could not copy text: ", err);
+          showToast("Failed to copy to clipboard", 'error');
+      }
   );
 }
 
-// Save palette
 function savePalette(palette) {
   const savedPalettes = JSON.parse(localStorage.getItem("savedPalettes")) || [];
   savedPalettes.push(palette);
   localStorage.setItem("savedPalettes", JSON.stringify(savedPalettes));
-  alert("Palette saved successfully!");
+  showToast("Palette saved successfully!", 'success');
 }
 
 // Delete palette
@@ -149,12 +187,57 @@ function deletePalette(selectedPalette) {
       JSON.stringify(palette.colors) !== JSON.stringify(selectedPalette.colors)
   );
   localStorage.setItem("savedPalettes", JSON.stringify(updatedPalettes));
-  alert("Palette deleted successfully!");
+  showToast("Palette deleted successfully!", 'success');
 }
 
 // Open snapshot modal
 function openSnapshotModal(palette) {
-  snapshotModal.style.display = "block";
+  SnapshotModal.style.display = "block";
+  // Add event listener for the username input field
+  usernameInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission if within a form
+      const username = usernameInput.value.trim();
+      renderSnapshotCanvas(palette, username);
+      usernameInput.blur(); // Remove focus from the input field
+    }
+  });
+  // Enter Button Event Listner 
+  let enterBtn = document.getElementById("enterBtn");
+  enterBtn.addEventListener("click", () => {
+    const username = usernameInput.value.trim();
+    renderSnapshotCanvas(palette, username); // Pass the last palette and username to the render function
+  });
+
+  // Delete Button Event Listener
+  let deleteBtn = document.getElementById("deleteBtn");
+  deleteBtn.addEventListener("click", () => {
+    const username = '';
+    usernameInput.value = '';
+    renderSnapshotCanvas(palette, username); // Pass the last palette and username to the render function
+  });
+
+  // Edit Button Event Listener
+  let editBtn = document.getElementById("editBtn");
+  editBtn.addEventListener("click", () => {
+    const currentUsername = usernameInput.value.trim();
+    usernameInput.value = currentUsername;
+    usernameInput.focus();
+    usernameInput.select();
+
+    // Update the snapshot when the user finishes editing
+    usernameInput.addEventListener("blur", () => {
+      const newUsername = usernameInput.value.trim();
+      if (newUsername !== currentUsername) {
+        renderSnapshotCanvas(palette, newUsername);
+      }
+    });
+  });
+  renderSnapshotCanvas(palette);
+}
+
+function openSnapshotModal(palette) {
+  shareSnapshotModal.style.display = "flex";
   renderSnapshotCanvas(palette);
 }
 
@@ -177,7 +260,12 @@ function renderSnapshotCanvas(palette) {
   ctx.fillText("ChromaVerse Palette", width / 2, 40);
 
   // Username
-  const username = usernameInput.value.trim() || "Anonymous";
+  let userName;
+  if (username) {
+    userName = username;
+  } else {
+    userName = "Anonymous";
+  }
   ctx.font = "16px Arial";
   ctx.fillText(`Created by: ${username}`, width / 2, 70);
 
@@ -222,32 +310,23 @@ function shareOnSocialMedia(platform) {
   let shareUrl;
 
   switch (platform) {
-    case "facebook":
-      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        dataUrl
-      )}`;
-      break;
-    case "twitter":
-      shareUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20ChromaVerse%20palette!&url=${encodeURIComponent(
-        dataUrl
-      )}`;
-      break;
-    case "instagram":
-      alert(
-        "To share on Instagram, please download the image and upload it manually to your Instagram account."
-      );
-      return;
-    case "pinterest":
-      shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
-        window.location.href
-      )}&media=${encodeURIComponent(
-        dataUrl
-      )}&description=My%20ChromaVerse%20Palette`;
-      break;
+      case "facebook":
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(dataUrl)}`;
+          break;
+      case "twitter":
+          shareUrl = `https://twitter.com/intent/tweet?text=Check%20out%20my%20ChromaVerse%20palette!&url=${encodeURIComponent(dataUrl)}`;
+          break;
+      case "instagram":
+          showToast("To share on Instagram, please download the image and upload it manually to your Instagram account.", 'info');
+          return;
+      case "pinterest":
+          shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&media=${encodeURIComponent(dataUrl)}&description=My%20ChromaVerse%20Palette`;
+          break;
   }
 
   if (shareUrl) {
-    window.open(shareUrl, "_blank");
+      window.open(shareUrl, "_blank");
+      showToast(`Sharing on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`, 'success');
   }
 }
 
@@ -257,6 +336,10 @@ generateBtn.addEventListener("click", generatePalette);
 colorPicker.addEventListener("input", (e) => {
   selectedColor.textContent = e.target.value;
   selectedColor.style.backgroundColor = e.target.value;
+
+  const rValue = parseInt(e.target.value.slice(1, 3), 16);
+
+  selectedColor.style.color = rValue <= 128 ? 'white' : 'black';
 });
 
 modeToggle.addEventListener("click", () => {
@@ -267,7 +350,7 @@ modeToggle.addEventListener("click", () => {
 });
 
 closeModal.addEventListener("click", () => {
-  snapshotModal.style.display = "none";
+  shareSnapshotModal.style.display = "none";
 });
 
 downloadBtn.addEventListener("click", downloadSnapshot);
@@ -370,3 +453,4 @@ function init() {
 }
 
 init();
+

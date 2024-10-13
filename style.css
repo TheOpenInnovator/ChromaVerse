@@ -102,12 +102,28 @@ h1 {
 }
 
 #colorPicker {
+    appearance: none;
     width: 50px;
     height: 50px;
     border: none;
     border-radius: 50%;
+    margin-right: 10px;
     cursor: pointer;
-    margin-right: 1rem;
+    position: relative;
+}
+
+#colorPicker::-webkit-color-swatch {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translate(-5px, -5px);
+}
+
+#colorPicker::-moz-color-swatch {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translate(-5px, -5px);
 }
 
 .selected-color {
@@ -115,6 +131,7 @@ h1 {
     padding: 0.5rem 1rem;
     border-radius: 5px;
     background-color: var(--card-bg);
+    transition: color 0.5s ease;
 }
 
 .mode-toggle {
@@ -193,16 +210,17 @@ h1 {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);    
 }
 
 .modal-content {
     background-color: var(--card-bg);
-    margin: 10% auto;
+    margin: auto ;
     padding: 2rem;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
+
 }
 
 .close-modal {
@@ -243,40 +261,64 @@ h1 {
 .snapshot-container {
     margin-top: 1rem;
     text-align: center;
+   
 }
 
 .snapshot-canvas {
-    max-width: 100%;
+    width: 80%;
     border-radius: 5px;
 }
 
 .snapshot-actions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-top: 1rem;
+    gap: 1rem;
 }
 
+.snapshot-general-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.snapshot-copyPalette-action{
+    border: 1px solid var(--shadow);
+    background-color: var(--card-bg);
+    display: flex;
+    align-items: center;
+    color: var(--shadow);
+    border-radius: 0.25rem;
+    gap: 1rem;
+
+}
 .snapshot-actions button {
     padding: 0.5rem 1rem;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: none;
 }
 
 .snapshot-actions button:hover {
-    background-color: var(--accent);
+    background-color: var(--primary);
     color: white;
 }
 
 .social-share {
     display: flex;
     gap: 0.5rem;
+    
 }
 
 .social-share button {
     font-size: 1.2rem;
-    padding: 0.5rem;
+    padding: 0.5rem;    
+    transition: transform 0.3s ease; 
+
+}
+.social-share button:hover {
+    transform: scale(1.15); 
 }
 
 @media (max-width: 768px) {
@@ -308,5 +350,60 @@ h1 {
 
     .color-picker-wrapper {
         margin-bottom: 1rem;
+    }
+}
+
+.toaster-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toaster {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 var(--shadow);
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+    max-width: 300px;
+}
+
+.toaster-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.toaster-close {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
