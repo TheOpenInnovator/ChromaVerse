@@ -330,6 +330,10 @@ modeToggle.addEventListener("click", () => {
   const icon = modeToggle.querySelector("i");
   icon.classList.toggle("fa-moon");
   icon.classList.toggle("fa-sun");
+
+  // Save the current mode to localStorage
+  const isDarkMode = document.body.classList.contains("dark-mode");
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 });
 
 closeModal.addEventListener("click", () => {
@@ -430,6 +434,21 @@ function hslToHex(h, s, l) {
 
 // Initialize the app
 function init() {
+  const savedTheme = localStorage.getItem("theme");
+
+  // Apply the saved theme if it exists
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    const icon = modeToggle.querySelector("i");
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
+  } else {
+    document.body.classList.remove("dark-mode");
+    const icon = modeToggle.querySelector("i");
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
+  }
+
   const savedPalettes = JSON.parse(localStorage.getItem("savedPalettes")) || [];
   palettes = savedPalettes;
   renderPalettes();
