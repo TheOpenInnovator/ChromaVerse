@@ -242,7 +242,7 @@ function openSnapshotModal(palette) {
 }
 
 // Render snapshot canvas
-function renderSnapshotCanvas(palette) {
+function renderSnapshotCanvas(palette, username) {
   const ctx = snapshotCanvas.getContext("2d");
   const width = 600;
   const height = 400;
