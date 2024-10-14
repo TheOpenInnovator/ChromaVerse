@@ -14,6 +14,7 @@ const shareFacebook = document.getElementById("shareFacebook");
 const shareTwitter = document.getElementById("shareTwitter");
 const shareInstagram = document.getElementById("shareInstagram");
 const sharePinterest = document.getElementById("sharePinterest");
+const deleteBtn = document.getElementById("deleteBtn");
 
 let palettes = [];
 
@@ -103,11 +104,16 @@ function renderPalettes() {
     saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
     saveBtn.addEventListener("click", () => savePalette(palette));
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
+    deleteBtn.addEventListener("click", () => deletePalette(palette));
+
     const shareBtn = document.createElement("button");
     shareBtn.innerHTML = '<i class="fas fa-share-alt"></i> Share';
     shareBtn.addEventListener("click", () => openSnapshotModal(palette));
 
     actionsDiv.appendChild(saveBtn);
+    actionsDiv.appendChild(deleteBtn);
     actionsDiv.appendChild(shareBtn);
 
     paletteCard.appendChild(colorsDiv);
@@ -171,6 +177,17 @@ function savePalette(palette) {
   savedPalettes.push(palette);
   localStorage.setItem("savedPalettes", JSON.stringify(savedPalettes));
   showToast("Palette saved successfully!", 'success');
+}
+
+// Delete palette
+function deletePalette(selectedPalette) {
+  const savedPalettes = JSON.parse(localStorage.getItem("savedPalettes")) || [];
+  const updatedPalettes = savedPalettes.filter(
+    (palette) =>
+      JSON.stringify(palette.colors) !== JSON.stringify(selectedPalette.colors)
+  );
+  localStorage.setItem("savedPalettes", JSON.stringify(updatedPalettes));
+  showToast("Palette deleted successfully!", 'success');
 }
 
 // Open snapshot modal
@@ -250,7 +267,7 @@ function renderSnapshotCanvas(palette, username) {
     userName = "Anonymous";
   }
   ctx.font = "16px Arial";
-  ctx.fillText(`Created by: ${userName}`, width / 2, 70);
+  ctx.fillText(`Created by: ${username}`, width / 2, 70);
 
   // Color swatches
   const swatchSize = 80;
