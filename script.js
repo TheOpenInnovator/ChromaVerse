@@ -14,6 +14,9 @@ const shareFacebook = document.getElementById("shareFacebook");
 const shareTwitter = document.getElementById("shareTwitter");
 const shareInstagram = document.getElementById("shareInstagram");
 const sharePinterest = document.getElementById("sharePinterest");
+const colorCodesDiv = document.getElementById('copy-palette-codes');
+const copyButton = document.getElementById('copyToClipboard');
+
 
 let palettes = [];
 
@@ -75,6 +78,7 @@ function generatePalette() {
 
   palettes.unshift(palette);
   renderPalettes();
+  colorCodesDiv.textContent = colors.join(', ');
 }
 
 // Render palettes
@@ -223,6 +227,7 @@ function openSnapshotModal(palette) {
   shareSnapshotModal.style.display = "flex";
   renderSnapshotCanvas(palette);
 }
+copyButton.addEventListener('click',() => {copyToClipboard(colorCodesDiv.textContent)});
 
 // Render snapshot canvas
 function renderSnapshotCanvas(palette, username) {
