@@ -1,87 +1,109 @@
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+:root {
+    --primary: #4A90E2;
+    --secondary: #50E3C2;
+    --accent: #F5A623;
+    --background: #f0f0f0;
+    --text: #333333;
+    --card-bg: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1); 
+}
 
-body {
-    font-family: 'Poppins', sans-serif;
+.dark-mode {
+    --primary: #3D52A0;
+    --secondary: #7091E6;
+    --accent: #ADBBDA;
+    --background: #212A31;
+    --text: #f0f0f0;
+    --card-bg: #2E3944;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f0f0f5;
-    color: #333;
-    transition: background-color 0.5s, color 0.5s;
+    box-sizing: border-box;
 }
 
-/* Container */
+body {
+    font-family: 'Poppins', sans-serif; /* Change to Poppins */
+    background-color: var(--background);
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
 .container {
-    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
-    padding: 20px;
+    padding: 2rem;
 }
 
-/* Header */
 header {
-    margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-header h1 {
+h1 {
     font-size: 3rem;
-    color: #3e7eff;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-header p {
-    font-size: 1.2rem;
-    color: #666;
-}
-
-/* Input Section */
-.input-section {
-    background: rgba(255, 255, 255, 0.2);
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 var(--shadow);
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-bottom: 2rem;
 }
 
 .color-input {
-    width: 60%;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    width: 70%;
+    padding: 0.8rem;
     font-size: 1rem;
-    margin-right: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    background-color: var(--card-bg);
+    color: var(--text);
+}
+
+.color-input::placeholder {
+    color: black; /* Customize this color */
+}
+
+/* If you're using dark mode, you can also add this */
+.dark-mode ::placeholder {
+    color: white; /* Change this to a lighter color for dark mode */
 }
 
 .generate-btn {
-    background-color: #3e7eff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
+    padding: 0.8rem 1.5rem;
     font-size: 1rem;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
     transition: background-color 0.3s ease;
-    display: flex;
-    align-items: center;
 }
 
 .generate-btn:hover {
-    background-color: #3269d3;
+    background-color: var(--secondary);
 }
 
-.generate-btn i {
-    margin-right: 8px;
-}
-
-/* Tools Section */
 .tools-section {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
 .color-picker-wrapper {
@@ -90,105 +112,308 @@ header p {
 }
 
 #colorPicker {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    appearance: none;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
     margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+#colorPicker::-webkit-color-swatch {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translate(-5px, -5px);
+}
+
+#colorPicker::-moz-color-swatch {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translate(-5px, -5px);
 }
 
 .selected-color {
-    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    background-color: var(--card-bg);
+    transition: color 0.5s ease;
 }
 
-/* Dark Mode Toggle */
 .mode-toggle {
-    background: #333;
-    color: white;
+    background: none;
     border: none;
-    padding: 10px 20px;
-    border-radius: 50%;
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.mode-toggle:hover {
-    background: #555;
+    color: var(--text);
 }
 
 .palettes-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
-/* Glassmorphism for modal */
-.modal-content {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+.palette-card {
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: transform 0.3s ease;
 }
 
-.modal .close-modal {
-    font-size: 1.5rem;
+.palette-card:hover {
+    transform: translateY(-5px);
+}
+
+.palette-colors {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.color-swatch {
+    flex: 1;
+    height: 100px;
     cursor: pointer;
-    color: #333;
+    transition: transform 0.3s ease;
+}
+
+.color-swatch:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.color-swatch:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.color-swatch:hover {
+    transform: scale(1.05);
+}
+
+.palette-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.palette-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.palette-actions button:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);    
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: auto ;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+
+}
+
+.close-modal {
+    color: var(--text);
     float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Animations */
-button, input {
-    transition: all 0.3s ease;
+.inputWithButtons{
+    margin-top: .5vw;
+    display: flex;
+    gap: .5vw;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
 }
 
-/* Toaster */
+#usernameInput, .btns{
+    padding: .5vw;
+    border: .4px solid var(--text);
+    border-radius: .4vw;
+    cursor: pointer;
+}
+
+.innerBtns{
+    display: flex;
+    gap: .5vw;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btns{
+    border-radius: 5px;
+}
+
+.snapshot-container {
+    margin-top: 1rem;
+    text-align: center;
+   
+}
+
+.snapshot-canvas {
+    width: 80%;
+    border-radius: 5px;
+}
+
+.snapshot-actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.snapshot-general-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.snapshot-copyPalette-action{
+    border: 1px solid var(--shadow);
+    background-color: var(--card-bg);
+    display: flex;
+    align-items: center;
+    color:var(--text);
+    border-radius: 0.25rem;
+    gap: 1rem;
+
+}
+.snapshot-actions button {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.snapshot-actions button:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.social-share {
+    display: flex;
+    gap: 0.5rem;
+    
+}
+
+.social-share button {
+    font-size: 1.2rem;
+    padding: 0.5rem;    
+    transition: transform 0.3s ease; 
+
+}
+.social-share button:hover {
+    transform: scale(1.15); 
+}
+
+@media (max-width: 768px) {
+    .input-section, .inputWithButtons {
+        flex-direction: column;
+    }
+
+    .innerBtns{
+        margin-top: 5px;
+        display: flex;
+        gap: 5px;
+    }
+
+    .color-input {
+        width: 100%;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+    }
+
+    .generate-btn {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .tools-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .color-picker-wrapper {
+        margin-bottom: 1rem;
+    }
+}
+
 .toaster-container {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
-    z-index: 100;
+    z-index: 1000;
 }
 
-/* Dark Mode Styling */
-.dark-mode {
-    background-color: #181818;
-    color: #f5f5f5;
+.toaster {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 var(--shadow);
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+    max-width: 300px;
 }
 
-.dark-mode .input-section, 
-.dark-mode .modal-content {
-    background: rgba(48, 48, 48, 0.3);
+.toaster-icon {
+    margin-right: 10px;
+    font-size: 18px;
 }
 
-.dark-mode .mode-toggle {
-    background-color: #f5f5f5;
-    color: #333;
+.toaster-close {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
 }
 
-.dark-mode header h1 {
-    color: #5cb1ff;
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-.dark-mode body {
-    background-color: #1a1a1a;
-}
-
-.dark-mode .generate-btn {
-    background-color: #5cb1ff;
-}
-
-.dark-mode .generate-btn:hover {
-    background-color: #4791e6;
-}
-
-.dark-mode .color-input {
-    background-color: #333;
-    color: #f5f5f5;
-    border-color: #666;
-}
-
-.dark-mode .toaster-container {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
