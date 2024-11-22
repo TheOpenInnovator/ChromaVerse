@@ -122,11 +122,16 @@ function renderPalettes() {
                 deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
                 deleteBtn.addEventListener('click', () => deletePalette(palette));
 
+    const deletePaletteBtn = document.createElement("button");
+    deletePaletteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+    deletePaletteBtn.addEventListener("click", () => deletePalette(palette));
+
     const shareBtn = document.createElement("button");
     shareBtn.innerHTML = '<i class="fas fa-share-alt"></i> Share';
     shareBtn.addEventListener("click", () => openSnapshotModal(palette));
 
     actionsDiv.appendChild(saveBtn);
+    actionsDiv.appendChild(deletePaletteBtn);
     actionsDiv.appendChild(shareBtn);
     actionsDiv.appendChild(deleteBtn);
     paletteCard.appendChild(colorsDiv);
@@ -240,6 +245,15 @@ function deletePalette(selectedPalette) {
 }
 
 
+
+function deletePalette(paletteToDelete) {
+  const savedPalettes = JSON.parse(localStorage.getItem("savedPalettes")) || [];
+  const updatedPalettes = savedPalettes.filter(palette => JSON.stringify(palette.colors)!==JSON.stringify(paletteToDelete.colors));
+  console.log({updatedPalettes})
+  localStorage.setItem("savedPalettes", JSON.stringify(updatedPalettes));
+  showToast("Palette deleted successfully!", 'success');
+  init();
+}
 
 // Open snapshot modal
 function openSnapshotModal(palette) {
